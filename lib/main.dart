@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_app/data/object_box.dart';
 import 'package:form_builder_app/route/app_router.dart';
 import 'package:form_builder_app/ui/screens/splash_screen.dart';
 import 'package:form_builder_app/ui/theme/theme.dart';
 
-void main() {
+late ObjectBox objectBox;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  objectBox = await ObjectBox.create();
   runApp(
-    MyApp(
-      appRouter: AppRouter(),
-    ),
+    MyApp(appRouter: AppRouter()),
   );
 }
 

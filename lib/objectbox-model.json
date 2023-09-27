@@ -1,0 +1,131 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6109287760481377727",
+      "lastPropertyId": "3:5808274686897078254",
+      "name": "CustomForm",
+      "properties": [
+        {
+          "id": "1:4566605879096507945",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8183655943572068107",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:5808274686897078254",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:8897772665128299877",
+          "name": "customFormFields",
+          "targetId": "2:5461765472407713414"
+        },
+        {
+          "id": "2:1352961560810338500",
+          "name": "customFormFieldValues",
+          "targetId": "3:8323905850372227726"
+        }
+      ]
+    },
+    {
+      "id": "2:5461765472407713414",
+      "lastPropertyId": "5:7966458645851351151",
+      "name": "CustomFormField",
+      "properties": [
+        {
+          "id": "1:2424238504401768763",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5359060235795681080",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2551344093199541806",
+          "name": "isRequired",
+          "type": 1
+        },
+        {
+          "id": "4:1176773318473655894",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "5:7966458645851351151",
+          "name": "customFormId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:1570710689281906697",
+          "relationTarget": "CustomForm"
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:4503967139515961417",
+          "name": "customFormFieldValues",
+          "targetId": "3:8323905850372227726"
+        }
+      ]
+    },
+    {
+      "id": "3:8323905850372227726",
+      "lastPropertyId": "4:8985747499966177315",
+      "name": "CustomFormFieldValue",
+      "properties": [
+        {
+          "id": "1:4761834726017433959",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1796605303795217022",
+          "name": "value",
+          "type": 9
+        },
+        {
+          "id": "3:2237761880148405487",
+          "name": "customFormId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:6614479421664191725",
+          "relationTarget": "CustomForm"
+        },
+        {
+          "id": "4:8985747499966177315",
+          "name": "customFormFieldId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:6277195397160658925",
+          "relationTarget": "CustomFormField"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:8323905850372227726",
+  "lastIndexId": "3:6277195397160658925",
+  "lastRelationId": "3:4503967139515961417",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
