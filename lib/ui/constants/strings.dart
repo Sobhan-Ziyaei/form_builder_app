@@ -15,4 +15,5 @@ class RegisterFormScreenStrigns {
   static const registerFormAppbarTitle = 'صفحه ثبت فرم جدید' ;
   static const inputFormTitle = 'عنوان فرم خود را وارد نمایید' ;
   static const inputFormDescription = 'توضیح فرم خود را وارد نمایید' ;
+  static const save = 'ذخیره' ;
 }

@@ -5,6 +5,8 @@ import 'package:form_builder_app/data/models/custom_form_field_value.dart';
 import 'package:form_builder_app/main.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
+import 'package:form_builder_app/ui/widgets/green_button.dart';
+import 'package:form_builder_app/util/form_info.dart';
 
 class RegisterFormScreen extends StatefulWidget {
   RegisterFormScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
   final formFieldBox = objectBox.store.box<CustomFormField>();
   final formFieldValueBox = objectBox.store.box<CustomFormFieldValue>();
 
+  List<FormInfo> formInfoes = [];
   late TextEditingController formTitleController;
   late TextEditingController formDescriptionController;
   @override
@@ -91,6 +94,28 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                       controller: formDescriptionController,
                       hint: RegisterFormScreenStrigns.inputFormDescription,
                     ),
+                    SizedBox(height: size.height * 0.07),
+                    GreenButton(
+                      buttonText: RegisterFormScreenStrigns.save,
+                      onPressed: () {
+                        saveForm(formTitleController.text,
+                            formDescriptionController.text);
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.07),
+                    GreenButton(
+                      buttonText: 'خواندن',
+                      onPressed: () {
+                        print(formBox.getAll()[0].title);
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.07),
+                    GreenButton(
+                      buttonText: 'حذف کردن',
+                      onPressed: () {
+                        formBox.removeAll();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -99,6 +124,21 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
         ),
       ),
     );
+  }
+
+  void saveForm(String title, String description) {
+    CustomForm form = CustomForm();
+    setState(() {
+      FormInfo formInfo = FormInfo();
+      formInfo.title = title;
+      formInfo.description = description;
+      formInfo.formFields = [];
+      formInfoes.add(formInfo);
+
+      form.title = formInfo.title;
+      form.description = formInfo.description;
+    });
+    formBox.put(form);
   }
 }
 
@@ -136,9 +176,5 @@ class MainTextField extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void saveForm(String title, String description) {
-    var form = CustomForm(title: title, description: description);
   }
 }
