@@ -13,6 +13,16 @@ class CustomTheme {
         fontWeight: FontWeight.bold ,
         color: blackColor ,
       ),
+      titleSmall: TextStyle(
+        fontFamily: FontFamily.sahel ,
+        fontSize: 20 ,
+        color: blackColor,
+      ),
+      bodySmall: TextStyle(
+        fontFamily: FontFamily.sahel ,
+        fontSize: 15 ,
+        color: whiteColor ,
+      ),
     ),
   );
 }

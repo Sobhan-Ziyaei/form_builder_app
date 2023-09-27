@@ -37,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   style: theme.textTheme.titleMedium),
               SizedBox(height: size.height * 0.03),
               const SpinKitSpinningLines(
+                size: 50,
                 color: blackColor,
               ),
             ],

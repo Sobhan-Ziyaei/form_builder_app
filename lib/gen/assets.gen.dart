@@ -26,8 +26,11 @@ class $AssetsLottieGen {
   /// File path: assets/lottie/form_anim.json
   String get formAnim => 'assets/lottie/form_anim.json';
 
+  /// File path: assets/lottie/home_anim.json
+  String get homeAnim => 'assets/lottie/home_anim.json';
+
   /// List of all assets
-  List<String> get values => [formAnim];
+  List<String> get values => [formAnim, homeAnim];
 }
 
 class Assets {
