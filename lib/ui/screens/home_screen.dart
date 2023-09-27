@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_app/gen/assets.gen.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
+import 'package:form_builder_app/ui/screens/register_form_screen.dart';
 import 'package:form_builder_app/ui/widgets/black_button.dart';
 import 'package:lottie/lottie.dart';
 
@@ -41,25 +42,43 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Lottie.asset(Assets.lottie.homeAnim),
             ),
             Expanded(
-                flex: 3,
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height * 0.05),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        BlackButton(
-                          buttonText: HomeScreenStrings.createForm,
-                          onPressed: () {},
-                        ),
-                        BlackButton(
-                          buttonText: HomeScreenStrings.modifyForm,
-                          onPressed: () {},
-                        ),
-                      ],
-                    )
-                  ],
-                )),
+              flex: 3,
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.05),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BlackButton(
+                        buttonText: HomeScreenStrings.createForm,
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RegisterFormScreen.screenId);
+                        },
+                      ),
+                      BlackButton(
+                        buttonText: HomeScreenStrings.reportForms,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.03),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BlackButton(
+                        buttonText: HomeScreenStrings.modifyForm,
+                        onPressed: () {},
+                      ),
+                      BlackButton(
+                        buttonText: HomeScreenStrings.reportForms,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

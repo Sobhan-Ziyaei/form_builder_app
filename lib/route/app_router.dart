@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_app/ui/screens/home_screen.dart';
+import 'package:form_builder_app/ui/screens/register_form_screen.dart';
 import 'package:form_builder_app/ui/screens/splash_screen.dart';
 
 class AppRouter {
@@ -13,7 +14,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => HomeScreen(),
         );
-
+      case RegisterFormScreen.screenId:
+        return MaterialPageRoute(
+          builder: (context) => RegisterFormScreen(),
+        );
       default:
         return null;
     }
