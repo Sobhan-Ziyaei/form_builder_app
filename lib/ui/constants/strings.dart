@@ -16,4 +16,7 @@ class RegisterFormScreenStrigns {
   static const inputFormTitle = 'عنوان فرم خود را وارد نمایید' ;
   static const inputFormDescription = 'توضیح فرم خود را وارد نمایید' ;
   static const save = 'ذخیره' ;
+  static const singleText = 'متن تک خطی' ;
+  static const multiText = 'متن پاراگراف' ;
+  static const dropdown = 'منوی کشویی' ;
 }

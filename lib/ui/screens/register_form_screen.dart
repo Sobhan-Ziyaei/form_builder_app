@@ -5,7 +5,9 @@ import 'package:form_builder_app/data/models/custom_form_field_value.dart';
 import 'package:form_builder_app/main.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
+import 'package:form_builder_app/ui/widgets/black_button.dart';
 import 'package:form_builder_app/ui/widgets/green_button.dart';
+import 'package:form_builder_app/ui/widgets/orange_button.dart';
 import 'package:form_builder_app/util/form_info.dart';
 
 class RegisterFormScreen extends StatefulWidget {
@@ -95,6 +97,24 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
                       hint: RegisterFormScreenStrigns.inputFormDescription,
                     ),
                     SizedBox(height: size.height * 0.07),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        OrangeButton(
+                          buttonText: RegisterFormScreenStrigns.singleText,
+                          onPressed: () {},
+                        ),
+                        OrangeButton(
+                          buttonText: RegisterFormScreenStrigns.multiText,
+                          onPressed: () {},
+                        ),
+                        OrangeButton(
+                          buttonText: RegisterFormScreenStrigns.dropdown,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.05),
                     GreenButton(
                       buttonText: RegisterFormScreenStrigns.save,
                       onPressed: () {
