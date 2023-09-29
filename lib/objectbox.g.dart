@@ -275,7 +275,8 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (CustomFormFieldValue object, fb.Builder fbb) {
-          final valueOffset = fbb.writeString(object.value);
+          final valueOffset =
+              object.value == null ? null : fbb.writeString(object.value!);
           fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, valueOffset);
@@ -290,7 +291,7 @@ ModelDefinition getObjectBoxModel() {
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final valueParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
+              .vTableGetNullable(buffer, rootOffset, 6);
           final object = CustomFormFieldValue(id: idParam, value: valueParam);
           object.customForm.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);

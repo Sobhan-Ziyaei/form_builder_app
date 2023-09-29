@@ -19,4 +19,7 @@ class RegisterFormScreenStrigns {
   static const singleText = 'متن تک خطی' ;
   static const multiText = 'متن پاراگراف' ;
   static const dropdown = 'منوی کشویی' ;
+  static const fieldSingleTitle = 'عنوان فیلد متن تک خطی' ;
+  static const fieldMultiTitle = 'عنوان فیلد متن پاراگراف' ;
+  static const dropdownTitle = 'عنوان منوی کشویی' ;
 }

@@ -6,12 +6,12 @@ import 'package:objectbox/objectbox.dart';
 class CustomFormFieldValue {
   @Id()
   int id;
-  String value;
+  String? value;
   final customForm = ToOne<CustomForm>();
   final customFormField = ToOne<CustomFormField>();
 
   CustomFormFieldValue({
     this.id = 0,
-    required this.value,
+    this.value,
   });
 }

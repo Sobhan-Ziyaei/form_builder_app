@@ -12,7 +12,7 @@ class OrangeButton extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     return SizedBox(
       height: size.height * 0.05,
-      width: size.width * 0.15,
+      width: size.width * 0.25,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: orangeColor,
@@ -21,7 +21,7 @@ class OrangeButton extends StatelessWidget {
         child: Text(
           buttonText,
           style: theme.textTheme.bodySmall
-              ?.copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+              ?.copyWith(fontWeight: FontWeight.bold, fontSize: 10),
         ),
       ),
     );
