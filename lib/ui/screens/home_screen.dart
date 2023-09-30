@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_app/gen/assets.gen.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
+import 'package:form_builder_app/ui/screens/form_screen.dart';
 import 'package:form_builder_app/ui/screens/register_form_screen.dart';
 import 'package:form_builder_app/ui/widgets/black_button.dart';
 import 'package:lottie/lottie.dart';
@@ -58,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BlackButton(
                         buttonText: HomeScreenStrings.reportForms,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, FormScreen.screenId);
+                        },
                       ),
                     ],
                   ),

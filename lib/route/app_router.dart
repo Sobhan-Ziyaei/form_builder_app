@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_app/ui/screens/form_screen.dart';
 import 'package:form_builder_app/ui/screens/home_screen.dart';
 import 'package:form_builder_app/ui/screens/register_form_screen.dart';
 import 'package:form_builder_app/ui/screens/splash_screen.dart';
@@ -17,6 +18,10 @@ class AppRouter {
       case RegisterFormScreen.screenId:
         return MaterialPageRoute(
           builder: (context) => RegisterFormScreen(),
+        );
+      case FormScreen.screenId:
+        return MaterialPageRoute(
+          builder: (context) => FormScreen(),
         );
       default:
         return null;
