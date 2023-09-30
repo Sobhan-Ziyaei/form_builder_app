@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_app/ui/screens/form_content_screen.dart';
 import 'package:form_builder_app/ui/screens/form_screen.dart';
 import 'package:form_builder_app/ui/screens/home_screen.dart';
 import 'package:form_builder_app/ui/screens/register_form_screen.dart';
@@ -22,6 +23,11 @@ class AppRouter {
       case FormScreen.screenId:
         return MaterialPageRoute(
           builder: (context) => FormScreen(),
+        );
+      case FormContentScreen.screenId:
+      var argument = settings.arguments as int ;
+        return MaterialPageRoute(
+          builder: (context) => FormContentScreen(selectForm: argument),
         );
       default:
         return null;

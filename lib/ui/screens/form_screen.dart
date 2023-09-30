@@ -3,6 +3,7 @@ import 'package:form_builder_app/data/models/custom_form.dart';
 import 'package:form_builder_app/main.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
+import 'package:form_builder_app/ui/screens/form_content_screen.dart';
 import 'package:form_builder_app/ui/widgets/form_card.dart';
 
 class FormScreen extends StatefulWidget {
@@ -60,8 +61,13 @@ class _FormScreenState extends State<FormScreen> {
                   child: FormCard(
                     title: customForms[index].title ?? '',
                     description: customForms[index].description ?? '',
-                    selectButton:
-                        BlueCircleButton(text: FormScreenStrings.formContent),
+                    selectButton: InkWell(
+                      onTap: () => Navigator.pushNamed(
+                          context, FormContentScreen.screenId,
+                          arguments: customForms[index].id),
+                      child:
+                          BlueCircleButton(text: FormScreenStrings.formContent),
+                    ),
                     modifyButton:
                         BlueCircleButton(text: FormScreenStrings.formModify),
                     formCount: const SizedBox(),

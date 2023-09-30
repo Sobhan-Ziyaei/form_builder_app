@@ -29,3 +29,9 @@ class FormScreenStrings {
   static const formContent = 'محتویات';
   static const formModify = 'ویرایش';
 }
+
+class FormContentScreenStrings {
+  static const formContentList = 'محتویات فرم';
+  static const type = 'نوع فیلد :';
+  static const title = 'عنوان :';
+}

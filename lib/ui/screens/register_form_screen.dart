@@ -292,30 +292,22 @@ class _RegisterFormScreenState extends State<RegisterFormScreen> {
   void saveFormFieldValue(int index) {
     setState(
       () {
-        for (var i = 0; i < formFieldInfos.length; i++) {
-          if (formFieldInfos[i].values != null) {
-            for (var j = 0; j < formFieldInfos[i].values!.length; j++) {
-              var formFieldValueId = formFieldInfos[i].values![j].id;
-              var formInfoValue = formFieldInfos[i].values![j];
+          if (formFieldInfos[index].values != null) {
+          
+            for (var j = 0; j < formFieldInfos[index].values!.length; j++) {
+              var formInfoValue = formFieldInfos[index].values![j];
 
               var customFormFieldValue = CustomFormFieldValue();
               customFormFieldValue.value = formInfoValue.value;
               customFormFieldValue.customForm.target = userFormInfo;
               customFormFieldValue.customFormField.target = userFormFieldInfo;
+              userFormInfo?.customFormFieldValues.add(customFormFieldValue);
+              userFormFieldInfo?.customFormFieldValues.add(customFormFieldValue);
               formFieldBox.put(userFormFieldInfo!);
               formBox.put(userFormInfo!);
-
-              if (formFieldValueId == null) {
-                // Save the form field value only if it's a new value
-                formFieldValueBox.put(customFormFieldValue);
-                formInfoValue.id =
-                    customFormFieldValue.id; // Update the value's ID
-                formFieldBox.put(
-                    userFormFieldInfo!); // Update the form field with the new value
-              }
             }
           }
-        }
+      
       },
     );
   }
