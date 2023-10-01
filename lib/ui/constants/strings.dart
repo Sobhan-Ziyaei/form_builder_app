@@ -34,4 +34,13 @@ class FormContentScreenStrings {
   static const formContentList = 'محتویات فرم';
   static const type = 'نوع فیلد :';
   static const title = 'عنوان :';
+  static const modify = 'ویرایش فرم' ;
+}
+
+class ModifyScreenStrings{
+  static const modfifyFormList = 'ویرایش فرم' ;
+  static const labelDropdown = 'عنوان منوی کشویی' ;
+  static const labelDropdownTextField = 'مقدار ' ;
+  static const formTitle = 'عنوان فرم';
+  static const formDescription = 'توضیحات فرم' ;
 }

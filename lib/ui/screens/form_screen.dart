@@ -4,6 +4,7 @@ import 'package:form_builder_app/main.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
 import 'package:form_builder_app/ui/screens/form_content_screen.dart';
+import 'package:form_builder_app/ui/screens/modify_screen.dart';
 import 'package:form_builder_app/ui/widgets/form_card.dart';
 
 class FormScreen extends StatefulWidget {
@@ -46,37 +47,48 @@ class _FormScreenState extends State<FormScreen> {
             style: theme.textTheme.titleSmall,
           ),
         ),
-        body: Column(
-          children: [
-            SizedBox(height: size.height * 0.05),
-            ListView.builder(
-              itemCount: customForms.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      bottom: size.height * 0.02,
-                      right: size.width * 0.03,
-                      left: size.width * 0.03),
-                  child: FormCard(
-                    title: customForms[index].title ?? '',
-                    description: customForms[index].description ?? '',
-                    selectButton: InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, FormContentScreen.screenId,
-                          arguments: customForms[index].id),
-                      child:
-                          BlueCircleButton(text: FormScreenStrings.formContent),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.05),
+              ListView.builder(
+                itemCount: customForms.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: size.height * 0.02,
+                        right: size.width * 0.03,
+                        left: size.width * 0.03),
+                    child: FormCard(
+                      title: customForms[index].title ?? '',
+                      description: customForms[index].description ?? '',
+                      selectButton: InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          FormContentScreen.screenId,
+                          arguments: customForms[index].id,
+                        ),
+                        child:
+                            BlueCircleButton(text: FormScreenStrings.formContent),
+                      ),
+                      modifyButton: InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          ModifyScreen.screenId,
+                          arguments: customForms[index].id,
+                        ),
+                        child:
+                            BlueCircleButton(text: FormScreenStrings.formModify),
+                      ),
+                      formCount: const SizedBox(),
+                      formRegister: const SizedBox(),
                     ),
-                    modifyButton:
-                        BlueCircleButton(text: FormScreenStrings.formModify),
-                    formCount: const SizedBox(),
-                    formRegister: const SizedBox(),
-                  ),
-                );
-              },
-            )
-          ],
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

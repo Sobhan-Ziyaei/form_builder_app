@@ -7,22 +7,26 @@ import 'package:form_builder_app/objectbox.g.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
 import 'package:form_builder_app/ui/widgets/green_button.dart';
+import 'package:form_builder_app/util/form_info.dart';
 
-class FormContentScreen extends StatefulWidget {
-  FormContentScreen({Key? key, required this.selectForm}) : super(key: key);
-  static const screenId = '/form_content_screen';
+class ModifyScreen extends StatefulWidget {
+  ModifyScreen({Key? key, required this.selectForm}) : super(key: key);
+  static const screenId = '/modify_screen';
   final int selectForm;
   @override
-  State<FormContentScreen> createState() => _FormContentScreenState();
+  State<ModifyScreen> createState() => _ModifyScreenState();
 }
 
-class _FormContentScreenState extends State<FormContentScreen> {
+class _ModifyScreenState extends State<ModifyScreen> {
   final formBox = objectBox.store.box<CustomForm>();
   final formFieldBox = objectBox.store.box<CustomFormField>();
   final formFieldValueBox = objectBox.store.box<CustomFormFieldValue>();
+  CustomForm? userFormInfo;
+  CustomFormField? userFormFieldInfo;
   List<CustomFormField> customFormFields = [];
   List<CustomFormFieldValue> customFormFieldValues = [];
   String? dropdownValue;
+  String? newValue;
   @override
   void initState() {
     super.initState();
@@ -48,7 +52,7 @@ class _FormContentScreenState extends State<FormContentScreen> {
           ),
           centerTitle: true,
           title: Text(
-            FormContentScreenStrings.formContentList,
+            ModifyScreenStrings.modfifyFormList,
             style: theme.textTheme.titleSmall,
           ),
         ),
@@ -59,6 +63,60 @@ class _FormContentScreenState extends State<FormContentScreen> {
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
               child: Column(
                 children: [
+                  SizedBox(height: size.height * 0.05),
+                  TextFormField(
+                    initialValue: userFormInfo!.title!,
+                    onChanged: (value) {
+                      userFormInfo!.title = value;
+                    },
+                    style:
+                        theme.textTheme.bodyMedium?.copyWith(color: blackColor),
+                    decoration: InputDecoration(
+                      labelText: ModifyScreenStrings.formTitle,
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.03,
+                          vertical: size.height * 0.03),
+                      hintStyle: theme.textTheme.bodyMedium
+                          ?.copyWith(color: blackColor, fontSize: 18),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            const BorderSide(color: blackColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 3, color: greenColor),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.03),
+                  TextFormField(
+                    initialValue: userFormInfo!.description!,
+                    onChanged: (value) {
+                      userFormInfo!.description = value;
+                    },
+                    style:
+                        theme.textTheme.bodyMedium?.copyWith(color: blackColor),
+                    decoration: InputDecoration(
+                      labelText: ModifyScreenStrings.formDescription,
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.03,
+                          vertical: size.height * 0.03),
+                      hintStyle: theme.textTheme.bodyMedium
+                          ?.copyWith(color: blackColor, fontSize: 18),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            const BorderSide(color: blackColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 3, color: greenColor),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: size.height * 0.05),
                   ListView.builder(
                     shrinkWrap: true,
@@ -73,8 +131,16 @@ class _FormContentScreenState extends State<FormContentScreen> {
                   ),
                   SizedBox(height: size.height * 0.05),
                   GreenButton(
-                      buttonText: FormContentScreenStrings.modify,
-                      onPressed: () {}),
+                    buttonText: FormContentScreenStrings.modify,
+                    onPressed: () {
+                      print(customFormFields);
+                      saveForm();
+                      for (var i = 0; i < customFormFields.length; i++) {
+                        saveFormField(i);
+                        saveFormFieldValue(i);
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -84,7 +150,38 @@ class _FormContentScreenState extends State<FormContentScreen> {
     );
   }
 
+  void saveForm() {
+    formBox.put(userFormInfo!);
+  }
+
+  void saveFormField(int index) {
+    formFieldBox.put(customFormFields[index]);
+  }
+
+  void saveFormFieldValue(int index) {
+    if (customFormFields[index].type == 'dropdown') {
+      // Filter the customFormFieldValues list based on the current customFormField
+      List<CustomFormFieldValue> filteredValues = customFormFieldValues
+          .where((value) =>
+              value.customFormField.targetId == customFormFields[index].id)
+          .toList();
+
+      for (int i = 0; i < filteredValues.length; i++) {
+        String? newValue =
+            customFormFields[index].customFormFieldValues[i].value;
+        if (i < customFormFields[index].customFormFieldValues.length) {
+          customFormFields[index].customFormFieldValues[i].value = newValue;
+          formFieldValueBox
+              .put(customFormFields[index].customFormFieldValues[i]);
+        }
+      }
+    }
+  }
+
   void getFormContentData() {
+    //get form date
+    userFormInfo = formBox.get(widget.selectForm);
+
     // Clear existing data
     customFormFields.clear();
     customFormFieldValues.clear();
@@ -119,6 +216,9 @@ class _FormContentScreenState extends State<FormContentScreen> {
               ),
               SizedBox(height: size.height * 0.01),
               TextFormField(
+                onChanged: (value) {
+                  customFormField.title = value;
+                },
                 style: theme.textTheme.bodyMedium?.copyWith(color: blackColor),
                 initialValue: customFormField.title,
                 decoration: InputDecoration(
@@ -149,6 +249,9 @@ class _FormContentScreenState extends State<FormContentScreen> {
               ),
               SizedBox(height: size.height * 0.01),
               TextFormField(
+                onChanged: (value) {
+                  customFormField.title = value;
+                },
                 style: theme.textTheme.bodyMedium?.copyWith(color: blackColor),
                 maxLines: 3,
                 initialValue: customFormField.title,
@@ -196,29 +299,69 @@ class _FormContentScreenState extends State<FormContentScreen> {
                 style: theme.textTheme.bodyMedium?.copyWith(color: redColor),
               ),
               SizedBox(height: size.height * 0.03),
-              Text(
-                '${FormContentScreenStrings.title} ${customFormField.title!}',
-                style: theme.textTheme.bodyMedium?.copyWith(color: blackColor),
-              ),
-              SizedBox(height: size.height * 0.03),
-              DropdownButtonFormField<CustomFormFieldValue>(
-                style: theme.textTheme.bodySmall?.copyWith(color: blackColor),
-                value: selectedValue,
-                items: filteredValues.map((customFormFieldValue) {
-                  return DropdownMenuItem<CustomFormFieldValue>(
-                    value: customFormFieldValue,
-                    child: Text(customFormFieldValue.value ?? ''),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    dropdownValue = newValue?.value;
-                  });
+              TextFormField(
+                initialValue: customFormField.title!,
+                onChanged: (value) {
+                  customFormField.title = value;
                 },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                style: theme.textTheme.bodyMedium?.copyWith(color: blackColor),
+                decoration: InputDecoration(
+                  labelText: ModifyScreenStrings.labelDropdown,
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.03,
+                      vertical: size.height * 0.03),
+                  hintStyle: theme.textTheme.bodyMedium
+                      ?.copyWith(color: blackColor, fontSize: 18),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: blackColor, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(width: 3, color: greenColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
+              SizedBox(height: size.height * 0.03),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: filteredValues.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: size.height * 0.02),
+                    child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          newValue = value;
+                          dropdownValue = newValue;
+                        });
+                      },
+                      initialValue: filteredValues[index].value,
+                      style: theme.textTheme.bodyMedium
+                          ?.copyWith(color: blackColor),
+                      decoration: InputDecoration(
+                        labelText:
+                            '${ModifyScreenStrings.labelDropdownTextField} ${index + 1}',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.03,
+                            vertical: size.height * 0.03),
+                        hintStyle: theme.textTheme.bodyMedium
+                            ?.copyWith(color: blackColor, fontSize: 18),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: blackColor, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 3, color: greenColor),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
             ],
           );
         default:
