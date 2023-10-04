@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_app/data/models/custom_form.dart';
+import 'package:form_builder_app/ui/screens/fill_fom_screen.dart';
 import 'package:form_builder_app/main.dart';
 import 'package:form_builder_app/ui/constants/colors.dart';
 import 'package:form_builder_app/ui/constants/strings.dart';
@@ -69,8 +70,8 @@ class _FormScreenState extends State<FormScreen> {
                           FormContentScreen.screenId,
                           arguments: customForms[index].id,
                         ),
-                        child:
-                            BlueCircleButton(text: FormScreenStrings.formContent),
+                        child: BlueCircleButton(
+                            text: FormScreenStrings.formContent),
                       ),
                       modifyButton: InkWell(
                         onTap: () => Navigator.pushNamed(
@@ -78,11 +79,23 @@ class _FormScreenState extends State<FormScreen> {
                           ModifyScreen.screenId,
                           arguments: customForms[index].id,
                         ),
-                        child:
-                            BlueCircleButton(text: FormScreenStrings.formModify),
+                        child: BlueCircleButton(
+                            text: FormScreenStrings.formModify),
                       ),
                       formCount: const SizedBox(),
-                      formRegister: const SizedBox(),
+                      formRegister: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FillFormScreen(
+                                  selectFormId: customForms[index].id),
+                            ),
+                          );
+                        },
+                        child:
+                            BlueCircleButton(text: FormScreenStrings.fillForm),
+                      ),
                     ),
                   );
                 },

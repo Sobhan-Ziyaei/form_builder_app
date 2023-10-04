@@ -7,6 +7,7 @@ class HomeScreenStrings {
   static const createForm = 'ساختن فرم جدید';
   static const modifyForm = 'ویرایش فرم‌ها';
   static const reportForms = 'گزارش فرم‌ها';
+  static const fillForms = 'پر کردن فرم' ;
 }
 
 class RegisterFormScreenStrigns {
@@ -28,6 +29,7 @@ class FormScreenStrings {
   static const formList = 'لیست فرم‌ها';
   static const formContent = 'محتویات';
   static const formModify = 'ویرایش';
+  static const fillForm = 'پرکردن' ;
 }
 
 class FormContentScreenStrings {
@@ -43,4 +45,8 @@ class ModifyScreenStrings{
   static const labelDropdownTextField = 'مقدار ' ;
   static const formTitle = 'عنوان فرم';
   static const formDescription = 'توضیحات فرم' ;
+}
+
+class FillFormScreenStrings {
+  static const fillFormAppbarTitle = 'پر کردن فرم' ;
 }

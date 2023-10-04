@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {},
                       ),
                       BlackButton(
-                        buttonText: HomeScreenStrings.reportForms,
+                        buttonText: HomeScreenStrings.fillForms,
                         onPressed: () {},
                       ),
                     ],

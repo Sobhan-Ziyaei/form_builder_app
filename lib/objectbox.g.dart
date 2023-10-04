@@ -17,6 +17,8 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'data/models/custom_form.dart';
 import 'data/models/custom_form_field.dart';
 import 'data/models/custom_form_field_value.dart';
+import 'data/models/user_form_values.dart';
+import 'data/models/user_forms.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -127,6 +129,87 @@ final _entities = <ModelEntity>[
             relationTarget: 'CustomFormField')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 6279414105027937678),
+      name: 'UserFormValues',
+      lastPropertyId: const IdUid(7, 1064391518448079630),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8743111062917754702),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 2514066356225900319),
+            name: 'userFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(4, 997031741357501324),
+            relationTarget: 'UserForms'),
+        ModelProperty(
+            id: const IdUid(3, 6694534395539012885),
+            name: 'customFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(5, 8748118156365696549),
+            relationTarget: 'CustomForm'),
+        ModelProperty(
+            id: const IdUid(4, 817325051913285826),
+            name: 'customFormFieldId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(6, 4230176633490132725),
+            relationTarget: 'CustomFormField'),
+        ModelProperty(
+            id: const IdUid(5, 6094348518374968979),
+            name: 'stringVal',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 4369076656450010234),
+            name: 'itemId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 1064391518448079630),
+            name: 'numberVal',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(5, 1335536571117374342),
+      name: 'UserForms',
+      lastPropertyId: const IdUid(3, 5921028217859809498),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6042354081480505795),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7201365376687611313),
+            name: 'date',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5921028217859809498),
+            name: 'customFormId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(7, 4341566096628339302),
+            relationTarget: 'CustomForm')
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(5, 8134484813546372692),
+            name: 'userFormValues',
+            targetId: const IdUid(4, 6279414105027937678))
+      ],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -157,14 +240,14 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 8323905850372227726),
-      lastIndexId: const IdUid(3, 6277195397160658925),
-      lastRelationId: const IdUid(3, 4503967139515961417),
+      lastEntityId: const IdUid(5, 1335536571117374342),
+      lastIndexId: const IdUid(7, 4341566096628339302),
+      lastRelationId: const IdUid(5, 8134484813546372692),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
       retiredPropertyUids: const [],
-      retiredRelationUids: const [],
+      retiredRelationUids: const [4841581502436292443],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
@@ -300,6 +383,91 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.customFormField.attach(store);
           return object;
+        }),
+    UserFormValues: EntityDefinition<UserFormValues>(
+        model: _entities[3],
+        toOneRelations: (UserFormValues object) =>
+            [object.userForm, object.customForm, object.customFormField],
+        toManyRelations: (UserFormValues object) => {},
+        getId: (UserFormValues object) => object.id,
+        setId: (UserFormValues object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserFormValues object, fb.Builder fbb) {
+          final stringValOffset = object.stringVal == null
+              ? null
+              : fbb.writeString(object.stringVal!);
+          fbb.startTable(8);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.userForm.targetId);
+          fbb.addInt64(2, object.customForm.targetId);
+          fbb.addInt64(3, object.customFormField.targetId);
+          fbb.addOffset(4, stringValOffset);
+          fbb.addInt64(5, object.itemId);
+          fbb.addFloat64(6, object.numberVal);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final stringValParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 12);
+          final numberValParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final itemIdParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final object = UserFormValues(
+              id: idParam,
+              stringVal: stringValParam,
+              numberVal: numberValParam,
+              itemId: itemIdParam);
+          object.userForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.userForm.attach(store);
+          object.customForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          object.customForm.attach(store);
+          object.customFormField.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          object.customFormField.attach(store);
+          return object;
+        }),
+    UserForms: EntityDefinition<UserForms>(
+        model: _entities[4],
+        toOneRelations: (UserForms object) => [object.customForm],
+        toManyRelations: (UserForms object) =>
+            {RelInfo<UserForms>.toMany(5, object.id): object.userFormValues},
+        getId: (UserForms object) => object.id,
+        setId: (UserForms object, int id) {
+          object.id = id;
+        },
+        objectToFB: (UserForms object, fb.Builder fbb) {
+          final dateOffset =
+              object.date == null ? null : fbb.writeString(object.date!);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, dateOffset);
+          fbb.addInt64(2, object.customForm.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final dateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 6);
+          final object = UserForms(id: idParam, date: dateParam);
+          object.customForm.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          object.customForm.attach(store);
+          InternalToManyAccess.setRelInfo<UserForms>(object.userFormValues,
+              store, RelInfo<UserForms>.toMany(5, object.id));
+          return object;
         })
   };
 
@@ -378,4 +546,54 @@ class CustomFormFieldValue_ {
   static final customFormField =
       QueryRelationToOne<CustomFormFieldValue, CustomFormField>(
           _entities[2].properties[3]);
+}
+
+/// [UserFormValues] entity fields to define ObjectBox queries.
+class UserFormValues_ {
+  /// see [UserFormValues.id]
+  static final id =
+      QueryIntegerProperty<UserFormValues>(_entities[3].properties[0]);
+
+  /// see [UserFormValues.userForm]
+  static final userForm =
+      QueryRelationToOne<UserFormValues, UserForms>(_entities[3].properties[1]);
+
+  /// see [UserFormValues.customForm]
+  static final customForm = QueryRelationToOne<UserFormValues, CustomForm>(
+      _entities[3].properties[2]);
+
+  /// see [UserFormValues.customFormField]
+  static final customFormField =
+      QueryRelationToOne<UserFormValues, CustomFormField>(
+          _entities[3].properties[3]);
+
+  /// see [UserFormValues.stringVal]
+  static final stringVal =
+      QueryStringProperty<UserFormValues>(_entities[3].properties[4]);
+
+  /// see [UserFormValues.itemId]
+  static final itemId =
+      QueryIntegerProperty<UserFormValues>(_entities[3].properties[5]);
+
+  /// see [UserFormValues.numberVal]
+  static final numberVal =
+      QueryDoubleProperty<UserFormValues>(_entities[3].properties[6]);
+}
+
+/// [UserForms] entity fields to define ObjectBox queries.
+class UserForms_ {
+  /// see [UserForms.id]
+  static final id = QueryIntegerProperty<UserForms>(_entities[4].properties[0]);
+
+  /// see [UserForms.date]
+  static final date =
+      QueryStringProperty<UserForms>(_entities[4].properties[1]);
+
+  /// see [UserForms.customForm]
+  static final customForm =
+      QueryRelationToOne<UserForms, CustomForm>(_entities[4].properties[2]);
+
+  /// see [UserForms.userFormValues]
+  static final userFormValues =
+      QueryRelationToMany<UserForms, UserFormValues>(_entities[4].relations[0]);
 }
